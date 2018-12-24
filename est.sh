@@ -70,10 +70,16 @@ chain(){
         show)
             chain_show
             ;;
+        save)
+            save_parameter=$1
+            export $CHAIN_$save_parameter=("${CHAIN_PLUGINS[@]}")
+            ;;
         exec)
-            CHAIN_QUEUE=("${CHAIN_PLUGINS[@]}")
+            save_parameter=$1
+            eval "chain_plugins=\$CHAIN_$save_parameter"
+            CHAIN_QUEUE=("${chain_plugins[@]}")
             export CHAIN_ORIGINAL_PARAMETERS="$@"
-            chain_runnext ${CHAIN_PLUGINS[@]}
+            chain_runnext ${chain_plugins[@]}
             ;;
         *)
 
