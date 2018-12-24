@@ -48,6 +48,12 @@ chain_runnext(){
 chain_flush(){
     export CHAIN_PLUGINS=()
 }
+chain_show(){
+    for i in $CHAIN_PLUGINS
+    do
+        echo "$i:"
+    done
+}
 chain(){
     parameter=$1
     shift
@@ -60,6 +66,9 @@ chain(){
             ;;
         flush)
             chain_flush
+            ;;
+        show)
+            chain_show
             ;;
         exec)
             CHAIN_QUEUE=("${CHAIN_PLUGINS[@]}")
