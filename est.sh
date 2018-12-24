@@ -74,8 +74,7 @@ chain(){
             if [[ $# == 1 ]]
             then
                 save_parameter=$1
-                eval "chain_parameter=\$CHAIN_$save_parameter"
-                export $CHAIN_$save_parameter=("${CHAIN_PLUGINS[@]}")
+                eval 'export CHAIN_'$save_parameter'=("${CHAIN_PLUGINS[@]}")'
             fi
             ;;
         exec)
