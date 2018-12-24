@@ -29,7 +29,7 @@ chain_plug(){
     fi
 }
 chain_unplug(){
-    for (( i=0; i<${#CD_PLUGINS[@]}; i++));do
+    for (( i=0; i<${#CHAIN_PLUGINS[@]}; i++));do
         if [[ ${CHAIN_PLUGINS[i]} == $1 ]];then
             CHAIN_PLUGINS=( "${CHAIN_PLUGINS[@]:$SH_START_INDEX:$i}" "${CHAIN_PLUGINS[@]:$((i + 1))}" )
             i=$((i - 1))
@@ -45,6 +45,9 @@ chain_runnext(){
     CHAIN_QUEUE=("${next_plugins[@]}")
     $plugin
 }
+chain_flush(){
+    export CHAIN_PLUGINS=()
+}
 chain(){
     parameter=$1
     shift
@@ -54,6 +57,9 @@ chain(){
             ;;
         unplug)
             chain_unplug $@
+            ;;
+        flush)
+            chain_flush
             ;;
         exec)
             CHAIN_QUEUE=("${CHAIN_PLUGINS[@]}")
