@@ -71,15 +71,22 @@ chain(){
             chain_show
             ;;
         save)
-            save_parameter=$1
-            export $CHAIN_$save_parameter=("${CHAIN_PLUGINS[@]}")
+            if [[ $# == 1]]
+            then
+                save_parameter=$1
+                eval "chain_parameter=\$CHAIN_$save_parameter"
+                export $CHAIN_$save_parameter=("${CHAIN_PLUGINS[@]}")
+            fi
             ;;
         exec)
-            save_parameter=$1
-            eval "chain_plugins=\$CHAIN_$save_parameter"
-            CHAIN_QUEUE=("${chain_plugins[@]}")
-            export CHAIN_ORIGINAL_PARAMETERS="$@"
-            chain_runnext ${chain_plugins[@]}
+            if [[ $# == 1]]
+            then
+                save_parameter=$1
+                eval "chain_plugins=\$CHAIN_$save_parameter"
+                CHAIN_QUEUE=("${chain_plugins[@]}")
+                export CHAIN_ORIGINAL_PARAMETERS="$@"
+                chain_runnext ${chain_plugins[@]}
+            fi
             ;;
         *)
 
