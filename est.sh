@@ -51,7 +51,7 @@ chain_flush(){
 chain_show(){
     for i in $CHAIN_PLUGINS
     do
-        echo "$i:"
+        echo -n "$i:"
     done
 }
 chain(){
@@ -81,6 +81,7 @@ chain(){
             if [[ $# == 1 ]]
             then
                 save_parameter=$1
+                shift
                 eval 'chain_plugins=("${CHAIN_'$save_parameter'[@]}")'
                 CHAIN_QUEUE=("${chain_plugins[@]}")
                 export CHAIN_ORIGINAL_PARAMETERS="$@"
