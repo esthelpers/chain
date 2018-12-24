@@ -71,7 +71,7 @@ chain(){
             chain_show
             ;;
         save)
-            if [[ $# == 1]]
+            if [[ $# == 1 ]]
             then
                 save_parameter=$1
                 eval "chain_parameter=\$CHAIN_$save_parameter"
@@ -79,7 +79,7 @@ chain(){
             fi
             ;;
         exec)
-            if [[ $# == 1]]
+            if [[ $# == 1 ]]
             then
                 save_parameter=$1
                 eval "chain_plugins=\$CHAIN_$save_parameter"
