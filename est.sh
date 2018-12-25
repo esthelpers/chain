@@ -78,15 +78,12 @@ chain(){
             fi
             ;;
         exec)
-            if [[ $# == 1 ]]
-            then
-                save_parameter=$1
-                shift
-                eval 'chain_plugins=("${CHAIN_'$save_parameter'[@]}")'
-                CHAIN_QUEUE=("${chain_plugins[@]}")
-                export CHAIN_ORIGINAL_PARAMETERS="$@"
-                chain_runnext ${chain_plugins[@]}
-            fi
+            save_parameter=$1
+            shift
+            eval 'chain_plugins=("${CHAIN_'$save_parameter'[@]}")'
+            CHAIN_QUEUE=("${chain_plugins[@]}")
+            export CHAIN_ORIGINAL_PARAMETERS="$@"
+            chain_runnext ${chain_plugins[@]}
             ;;
         *)
 
