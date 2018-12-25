@@ -24,8 +24,6 @@ chain_getparams(){
 }
 
 
-
-
 alias CHAIN_NEXT="chain_runnext \$CHAIN_QUEUE"
 example(){
     CHAIN_NEXT
@@ -100,7 +98,7 @@ chain(){
             shift
             eval 'export chain_plugins=("${CHAIN_'$save_parameter'[@]}")'
             CHAIN_QUEUE=("${chain_plugins[@]}")
-            export CHAIN_ORIGINAL_PARAMETERS="$@"
+            export CHAIN_ORIGINAL_PARAMETERS=($@)
             chain_runnext ${chain_plugins[@]}
             ;;
         *)
