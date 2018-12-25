@@ -7,6 +7,24 @@ is_function(){
     fi
 }
 CHAIN_PLUGINS=()
+CHAIN_PARAMS=()
+
+chain_getparams(){
+    for (( i=0; i<${#CHAIN_ORIGINAL_PARAMETERS[@]}; i++));do
+        if [[ ${CHAIN_ORIGINAL_PARAMETERS[i]} =~ ^$1:.*$ ]];then
+            temp=$CHAIN_ORIGINAL_PARAMETERS[i]
+            temp=${temp#*:}
+            CHAIN_ORIGINAL_PARAMETERS=( "${CHAIN_ORIGINAL_PARAMETERS[@]:$SH_START_INDEX:$i}" "${CHAIN_ORIGINAL_PARAMETERS[@]:$((i + 1))}" )
+            CHAIN_PARAMS=( "${CHAIN_PARAMS[@]}" "$temp" )
+            i=$((i - 1))
+            return 0
+        fi
+    done
+    return 1
+}
+
+
+
 
 alias CHAIN_NEXT="chain_runnext \$CHAIN_QUEUE"
 example(){
