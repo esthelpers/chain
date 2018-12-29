@@ -70,36 +70,40 @@ chain_show(){
         echo -n "$i:"
     done
 }
+chain_load(){
+    eval 'export CHAIN_PLUGINS=("${CHAIN_'${name^^}'[@]}")'
+    CHAIN_QUEUE=("${CHAIN_PLUGINS[@]}")
+}
+chain_save(){
+    eval 'export CHAIN_'${name^^}'=("${CHAIN_PLUGINS[@]}")'
+}
 chain(){
     parameter=$1
+    if [[ $parameter =~ ^.*:.*$ ]];then
+        name=${parameter#*:}
+        chain_load $name
+        parameter=${parameter%:*}
+    fi
     shift
+    export CHAIN_ORIGINAL_PARAMETERS=($@)
     case "$parameter" in
         plug)
             chain_plug $@
+            chain_save $name
             ;;
         unplug)
             chain_unplug $@
+            chain_save $name
             ;;
         flush)
             chain_flush
+            chain_save $name
             ;;
         show)
             chain_show
             ;;
-        save)
-            if [[ $# == 1 ]]
-            then
-                save_parameter=$1
-                eval 'export CHAIN_'$save_parameter'=("${CHAIN_PLUGINS[@]}")'
-            fi
-            ;;
         exec)
-            save_parameter=$1
-            shift
-            eval 'export chain_plugins=("${CHAIN_'$save_parameter'[@]}")'
-            CHAIN_QUEUE=("${chain_plugins[@]}")
-            export CHAIN_ORIGINAL_PARAMETERS=($@)
-            chain_runnext ${chain_plugins[@]}
+            chain_runnext ${CHAIN_PLUGINS[@]}
             ;;
         *)
 
