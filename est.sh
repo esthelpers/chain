@@ -71,10 +71,12 @@ chain_show(){
     done
 }
 chain_load(){
+    name=$1
     eval 'export CHAIN_PLUGINS=("${CHAIN_'${name^^}'[@]}")'
     CHAIN_QUEUE=("${CHAIN_PLUGINS[@]}")
 }
 chain_save(){
+    name=$1
     eval 'export CHAIN_'${name^^}'=("${CHAIN_PLUGINS[@]}")'
 }
 chain(){
