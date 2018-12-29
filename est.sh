@@ -87,9 +87,9 @@ chain_save(){
 chain(){
     parameter=$1
     if [[ $parameter =~ ^.*:.*$ ]];then
-        name=${parameter#*:}
+        name=${parameter%:*}
         chain_load $name
-        parameter=${parameter%:*}
+        parameter=${parameter#*:}
     fi
     shift
     export CHAIN_ORIGINAL_PARAMETERS=($@)
