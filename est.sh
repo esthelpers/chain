@@ -1,3 +1,4 @@
+est silent activate wai
 is_function(){
     if [[ $(type $1) =~ ^.*function.*$ ]];
     then
@@ -72,12 +73,16 @@ chain_show(){
 }
 chain_load(){
     name=$1
-    eval 'export CHAIN_PLUGINS=("${CHAIN_'${name^^}'[@]}")'
+    uppercase $name
+    name=$EST_RETURN
+    eval 'export CHAIN_PLUGINS=("${CHAIN_'$name'[@]}")'
     CHAIN_QUEUE=("${CHAIN_PLUGINS[@]}")
 }
 chain_save(){
     name=$1
-    eval 'export CHAIN_'${name^^}'=("${CHAIN_PLUGINS[@]}")'
+    uppercase $name
+    name=$EST_RETURN
+    eval 'export CHAIN_'$name'=("${CHAIN_PLUGINS[@]}")'
 }
 chain(){
     parameter=$1
