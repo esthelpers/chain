@@ -25,7 +25,7 @@ chain_getparams(){
 }
 
 
-alias CHAIN_NEXT="chain_runnext \$CHAIN_QUEUE"
+alias CHAIN_NEXT="chain_runnext \${CHAIN_QUEUE[@]}"
 example(){
     CHAIN_NEXT
 }
@@ -38,7 +38,7 @@ chain_plug(){
     is_function $plug
     if [[ $? == 0 ]];
     then
-        CHAIN_PLUGINS=($1 $CHAIN_PLUGINS)
+        CHAIN_PLUGINS=($1 ${CHAIN_PLUGINS[@]})
         return 0
     else
         echo "$plug is not a function"
@@ -66,7 +66,7 @@ chain_flush(){
     export CHAIN_PLUGINS=()
 }
 chain_show(){
-    for i in $CHAIN_PLUGINS
+    for i in ${CHAIN_PLUGINS[@]}
     do
         echo -n "$i:"
     done
